@@ -1,0 +1,25 @@
+{
+  "name": "dhavalkasvala/wp-vanilla-boilerplate",
+  "type": "wordpress-theme",
+  "license": "GPL-2.0-or-later",
+  "description": "",
+  "require": {
+    "composer/installers": "~1.2"
+  },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "*",
+    "wp-coding-standards/wpcs": "*",
+    "phpcompatibility/phpcompatibility-wp": "*"
+  },
+  "keywords": [
+    "wordpress"
+  ],
+  "autoload": {
+        "classmap": [
+            ""
+        ],
+        "files": [
+            "functions.php"
+        ]
+    }
+}
