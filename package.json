@@ -8,6 +8,8 @@
     "babel-loader": "^8.0.6",
     "babel-preset-es2015": "^6.24.1",
     "laravel-mix": "^5.0.0",
+    "live-server": "^1.2.1",
+    "postcss": "^7.0.23",
     "tailwindcss": "^1.1.4",
     "webpack": "^4.41.2"
   },
