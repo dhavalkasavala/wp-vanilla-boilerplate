@@ -7,10 +7,8 @@ mix.js('resources/js/app.js', 'xampp/htdocs/wp-vanilla-boilerplate/assets/js')
     files:['xampp/htdocs/wp-vanilla-boilerplate/assets/**/*.html','xampp/htdocs/wp-vanilla-boilerplate/assets/**/*.css','xampp/htdocs/wp-vanilla-boilerplate/assets/**/*.js']
 }); // Hot reloading
 
-const tailwindcss = require('tailwindcss')
+const tailwindcss = require('tailwindcss');
 
-mix.sass('resources/sass/app.scss', 'xampp/htdocs/wp-vanilla-boilerplate/assets/sass')
-   .options({
-      processCssUrls: false,
-      postCss: [ tailwindcss('tailwind.config.js') ],
-});
+mix.postCss('resources/sass/app.css', 'xampp/htdocs/wp-vanilla-boilerplate/assets/css',
+      tailwindcss('tailwind.config.js')
+);
