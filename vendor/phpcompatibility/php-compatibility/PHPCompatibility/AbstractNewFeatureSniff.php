@@ -1,19 +1,20 @@
 <?php
 /**
- * PHPCompatibility, an external standard for PHP_CodeSniffer.
+ * \PHPCompatibility\AbstractNewFeatureSniff.
  *
- * @package   PHPCompatibility
- * @copyright 2012-2019 PHPCompatibility Contributors
- * @license   https://opensource.org/licenses/LGPL-3.0 LGPL3
- * @link      https://github.com/PHPCompatibility/PHPCompatibility
+ * @category PHP
+ * @package  PHPCompatibility
+ * @author   Juliette Reinders Folmer <phpcompatibility_nospam@adviesenzo.nl>
  */
 
 namespace PHPCompatibility;
 
-use PHP_CodeSniffer_File as File;
-
 /**
- * Base class for new feature sniffs.
+ * \PHPCompatibility\AbstractNewFeatureSniff.
+ *
+ * @category PHP
+ * @package  PHPCompatibility
+ * @author   Juliette Reinders Folmer <phpcompatibility_nospam@adviesenzo.nl>
  */
 abstract class AbstractNewFeatureSniff extends AbstractComplexVersionSniff
 {
@@ -86,12 +87,12 @@ abstract class AbstractNewFeatureSniff extends AbstractComplexVersionSniff
      *
      * @return void
      */
-    public function addError(File $phpcsFile, $stackPtr, array $itemInfo, array $errorInfo)
+    public function addError(\PHP_CodeSniffer_File $phpcsFile, $stackPtr, array $itemInfo, array $errorInfo)
     {
         $itemName = $this->getItemName($itemInfo, $errorInfo);
         $error    = $this->getErrorMsgTemplate();
 
-        $errorCode = $this->stringToErrorCode($itemName) . 'Found';
+        $errorCode = $this->stringToErrorCode($itemName).'Found';
         $data      = array(
             $itemName,
             $errorInfo['not_in_version'],
@@ -102,4 +103,6 @@ abstract class AbstractNewFeatureSniff extends AbstractComplexVersionSniff
 
         $this->addMessage($phpcsFile, $error, $stackPtr, $errorInfo['error'], $errorCode, $data);
     }
-}
+
+
+}//end class

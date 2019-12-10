@@ -1,19 +1,20 @@
 <?php
 /**
- * PHPCompatibility, an external standard for PHP_CodeSniffer.
+ * \PHPCompatibility\AbstractComplexVersionSniff.
  *
- * @package   PHPCompatibility
- * @copyright 2012-2019 PHPCompatibility Contributors
- * @license   https://opensource.org/licenses/LGPL-3.0 LGPL3
- * @link      https://github.com/PHPCompatibility/PHPCompatibility
+ * @category PHP
+ * @package  PHPCompatibility
+ * @author   Juliette Reinders Folmer <phpcompatibility_nospam@adviesenzo.nl>
  */
 
 namespace PHPCompatibility;
 
-use PHP_CodeSniffer_File as File;
-
 /**
- * Abstract base class for sniffs based on complex arrays with PHP version information.
+ * \PHPCompatibility\AbstractComplexVersionSniff.
+ *
+ * @category PHP
+ * @package  PHPCompatibility
+ * @author   Juliette Reinders Folmer <phpcompatibility_nospam@adviesenzo.nl>
  */
 abstract class AbstractComplexVersionSniff extends Sniff implements ComplexVersionInterface
 {
@@ -30,7 +31,7 @@ abstract class AbstractComplexVersionSniff extends Sniff implements ComplexVersi
      *
      * @return void
      */
-    public function handleFeature(File $phpcsFile, $stackPtr, array $itemInfo)
+    public function handleFeature(\PHP_CodeSniffer_File $phpcsFile, $stackPtr, array $itemInfo)
     {
         $itemArray = $this->getItemArray($itemInfo);
         $errorInfo = $this->getErrorInfo($itemArray, $itemInfo);
@@ -102,8 +103,8 @@ abstract class AbstractComplexVersionSniff extends Sniff implements ComplexVersi
      * Allow for concrete child classes to filter the error message before it's passed to PHPCS.
      *
      * @param string $error     The error message which was created.
-     * @param array  $itemInfo  Base information about the item this error message applies to.
-     * @param array  $errorInfo Detail information about an item this error message applies to.
+     * @param array  $itemInfo  Base information about the item this error message applied to.
+     * @param array  $errorInfo Detail information about an item this error message applied to.
      *
      * @return string
      */
@@ -117,8 +118,8 @@ abstract class AbstractComplexVersionSniff extends Sniff implements ComplexVersi
      * Allow for concrete child classes to filter the error data before it's passed to PHPCS.
      *
      * @param array $data      The error data array which was created.
-     * @param array $itemInfo  Base information about the item this error message applies to.
-     * @param array $errorInfo Detail information about an item this error message applies to.
+     * @param array $itemInfo  Base information about the item this error message applied to.
+     * @param array $errorInfo Detail information about an item this error message applied to.
      *
      * @return array
      */
@@ -126,4 +127,6 @@ abstract class AbstractComplexVersionSniff extends Sniff implements ComplexVersi
     {
         return $data;
     }
-}
+
+
+}//end class

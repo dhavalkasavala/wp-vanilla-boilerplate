@@ -1,105 +1,75 @@
 <?php
 /**
- * WordPress Coding Standard.
+ * Flag calling in_array() without true as the third parameter.
  *
- * @package WPCS\WordPressCodingStandards
- * @link    https://github.com/WordPress/WordPress-Coding-Standards
- * @license https://opensource.org/licenses/MIT MIT
+ * @link https://vip.wordpress.com/documentation/code-review-what-we-look-for/#using-in_array-without-strict-parameter
+ * @category PHP
+ * @package  PHP_CodeSniffer
  */
 
-namespace WordPressCS\WordPress\Sniffs\PHP;
-
-use WordPressCS\WordPress\AbstractFunctionParameterSniff;
-
-/**
- * Flag calling in_array(), array_search() and array_keys() without true as the third parameter.
- *
- * @link    https://vip.wordpress.com/documentation/vip-go/code-review-blockers-warnings-notices/#using-in_array-without-strict-parameter
- *
- * @package WPCS\WordPressCodingStandards
- *
- * @since   0.9.0
- * @since   0.10.0 - This sniff not only checks for `in_array()`, but also `array_search()`
- *                   and `array_keys()`.
- *                 - The sniff no longer needlessly extends the `ArrayAssignmentRestrictionsSniff`
- *                   class which it didn't use.
- * @since   0.11.0 Refactored to extend the new WordPressCS native `AbstractFunctionParameterSniff` class.
- * @since   0.13.0 Class name changed: this class is now namespaced.
- */
-class StrictInArraySniff extends AbstractFunctionParameterSniff {
+class WordPress_Sniffs_PHP_StrictInArraySniff extends WordPress_Sniffs_Arrays_ArrayAssignmentRestrictionsSniff {
 
 	/**
-	 * The group name for this group of functions.
+	 * Returns an array of tokens this test wants to listen for.
 	 *
-	 * @since 0.11.0
-	 *
-	 * @var string
+	 * @return array
 	 */
-	protected $group_name = 'strict';
+	public function register() {
+		return array(
+			T_STRING
+		);
+	}
 
 	/**
-	 * List of array functions to which a $strict parameter can be passed.
+	 * Processes this test, when one of its tokens is encountered.
 	 *
-	 * The $strict parameter is the third and last parameter for each of these functions.
-	 *
-	 * The array_keys() function only requires the $strict parameter when the optional
-	 * second parameter $search has been set.
-	 *
-	 * @link http://php.net/in-array
-	 * @link http://php.net/array-search
-	 * @link http://php.net/array-keys
-	 *
-	 * @since 0.10.0
-	 * @since 0.11.0 Renamed from $array_functions to $target_functions.
-	 *
-	 * @var array <string function_name> => <bool always needed ?>
-	 */
-	protected $target_functions = array(
-		'in_array'     => true,
-		'array_search' => true,
-		'array_keys'   => false,
-	);
-
-	/**
-	 * Process the parameters of a matched function.
-	 *
-	 * @since 0.11.0
-	 *
-	 * @param int    $stackPtr        The position of the current token in the stack.
-	 * @param string $group_name      The name of the group which was matched.
-	 * @param string $matched_content The token content (function name) which was matched.
-	 * @param array  $parameters      Array with information about the parameters.
+	 * @param PHP_CodeSniffer_File  $phpcsFile The file being scanned.
+	 * @param int                   $stackPtr  The position of the current token in the stack passed in $tokens.
 	 *
 	 * @return void
 	 */
-	public function process_parameters( $stackPtr, $group_name, $matched_content, $parameters ) {
-		// Check if the strict check is actually needed.
-		if ( false === $this->target_functions[ $matched_content ] ) {
-			if ( \count( $parameters ) === 1 ) {
-				return;
-			}
+	public function process( PHP_CodeSniffer_File $phpcsFile, $stackPtr ) {
+		$tokens = $phpcsFile->getTokens();
+
+		// Skip any token that is not 'in_array'.
+		if ( 'in_array' !== strtolower( $tokens[ $stackPtr ]['content'] ) ) {
+			return;
 		}
 
-		// We're only interested in the third parameter.
-		if ( false === isset( $parameters[3] ) || 'true' !== strtolower( $parameters[3]['raw'] ) ) {
-			$errorcode = 'MissingTrueStrict';
+		if ( ! isset( $tokens[ $stackPtr - 1 ] ) ) {
+			return;
+		}
 
-			/*
-			 * Use a different error code when `false` is found to allow for excluding
-			 * the warning as this will be a conscious choice made by the dev.
-			 */
-			if ( isset( $parameters[3] ) && 'false' === strtolower( $parameters[3]['raw'] ) ) {
-				$errorcode = 'FoundNonStrictFalse';
-			}
+		$prevToken = $phpcsFile->findPrevious( array( T_WHITESPACE, T_COMMENT ), ( $stackPtr - 1 ), null, true );
 
-			$this->phpcsFile->addWarning(
-				'Not using strict comparison for %s; supply true for third argument.',
-				( isset( $parameters[3]['start'] ) ? $parameters[3]['start'] : $parameters[1]['start'] ),
-				$errorcode,
-				array( $matched_content )
-			);
+		// Skip if this is instance of in_array() not a function call.
+		if ( false === $prevToken || in_array( $tokens[ $prevToken ]['code'], array( T_OBJECT_OPERATOR, T_DOUBLE_COLON ), true ) ) {
+			return;
+		}
+
+		// Get the closing parenthesis.
+		$openParenthesis = $phpcsFile->findNext( T_OPEN_PARENTHESIS, $stackPtr + 1 );
+		if ( false === $openParenthesis ) {
+			return;
+		}
+
+		// Gracefully handle syntax error.
+		if ( ! isset( $tokens[ $openParenthesis ]['parenthesis_closer'] ) ) {
+			$phpcsFile->addError( 'Missing closing parenthesis for in_array().', $openParenthesis, 'MissingClosingParenthesis' );
+			return;
+		}
+
+		// Get last token in the function call.
+		$closeParenthesis = $tokens[ $openParenthesis ]['parenthesis_closer'];
+		$lastToken = $phpcsFile->findPrevious( array( T_WHITESPACE, T_COMMENT ), $closeParenthesis - 1, $openParenthesis + 1, true );
+		if ( false === $lastToken ) {
+			$phpcsFile->addError( 'Missing arguments to in_array().', $openParenthesis, 'MissingArguments' );
+			return;
+		}
+
+		if ( T_TRUE !== $tokens[ $lastToken ]['code'] ) {
+			$phpcsFile->addWarning( 'Not using strict comparison for in_array(); supply true for third argument.', $lastToken, 'MissingTrueStrict' );
 			return;
 		}
 	}
-
 }

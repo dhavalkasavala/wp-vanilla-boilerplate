@@ -1,19 +1,20 @@
 <?php
 /**
- * PHPCompatibility, an external standard for PHP_CodeSniffer.
+ * \PHPCompatibility\AbstractRemovedFeatureSniff.
  *
- * @package   PHPCompatibility
- * @copyright 2012-2019 PHPCompatibility Contributors
- * @license   https://opensource.org/licenses/LGPL-3.0 LGPL3
- * @link      https://github.com/PHPCompatibility/PHPCompatibility
+ * @category PHP
+ * @package  PHPCompatibility
+ * @author   Juliette Reinders Folmer <phpcompatibility_nospam@adviesenzo.nl>
  */
 
 namespace PHPCompatibility;
 
-use PHP_CodeSniffer_File as File;
-
 /**
- * Base class for removed feature sniffs.
+ * \PHPCompatibility\AbstractRemovedFeatureSniff.
+ *
+ * @category PHP
+ * @package  PHPCompatibility
+ * @author   Juliette Reinders Folmer <phpcompatibility_nospam@adviesenzo.nl>
  */
 abstract class AbstractRemovedFeatureSniff extends AbstractComplexVersionSniff
 {
@@ -108,7 +109,7 @@ abstract class AbstractRemovedFeatureSniff extends AbstractComplexVersionSniff
      *
      * @return void
      */
-    public function addError(File $phpcsFile, $stackPtr, array $itemInfo, array $errorInfo)
+    public function addError(\PHP_CodeSniffer_File $phpcsFile, $stackPtr, array $itemInfo, array $errorInfo)
     {
         $itemName = $this->getItemName($itemInfo, $errorInfo);
         $error    = $this->getErrorMsgTemplate();
@@ -129,7 +130,7 @@ abstract class AbstractRemovedFeatureSniff extends AbstractComplexVersionSniff
         }
 
         // Remove the last 'and' from the message.
-        $error = substr($error, 0, (\strlen($error) - 5));
+        $error = substr($error, 0, (strlen($error) - 5));
 
         if ($errorInfo['alternative'] !== '') {
             $error .= $this->getAlternativeOptionTemplate();
@@ -140,5 +141,8 @@ abstract class AbstractRemovedFeatureSniff extends AbstractComplexVersionSniff
         $data  = $this->filterErrorData($data, $itemInfo, $errorInfo);
 
         $this->addMessage($phpcsFile, $error, $stackPtr, $errorInfo['error'], $errorCode, $data);
-    }
-}
+
+    }//end addError()
+
+
+}//end class

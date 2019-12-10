@@ -1,14 +1,12 @@
 <?php
 /**
- * PHPCompatibility, an external standard for PHP_CodeSniffer.
- *
  * PHPCS cross-version compatibility helper.
  *
- * @package   PHPCompatibility
- * @copyright 2012-2019 PHPCompatibility Contributors
- * @license   https://opensource.org/licenses/LGPL-3.0 LGPL3
- * @link      https://github.com/PHPCompatibility/PHPCompatibility
+ * @category PHP
+ * @package  PHPCompatibility
+ * @author   Juliette Reinders Folmer <phpcompatibility_nospam@adviesenzo.nl>
  */
+
 
 /*
  * Alias a number of PHPCS 3.x classes to their PHPCS 2.x equivalents.
@@ -38,20 +36,20 @@ if (defined('PHPCOMPATIBILITY_PHPCS_ALIASES_SET') === false) {
     if (class_exists('\PHP_CodeSniffer_Exception') === false) {
         class_alias('PHP_CodeSniffer\Exceptions\RuntimeException', '\PHP_CodeSniffer_Exception');
     }
-    if (class_exists('\PHP_CodeSniffer_Standards_AbstractScopeSniff') === false) {
-        class_alias('PHP_CodeSniffer\Sniffs\AbstractScopeSniff', '\PHP_CodeSniffer_Standards_AbstractScopeSniff');
-    }
-    if (class_exists('\Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff') === false) {
-        class_alias('PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions\CamelCapsFunctionNameSniff', '\Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff');
-    }
 
     define('PHPCOMPATIBILITY_PHPCS_ALIASES_SET', true);
 
     /*
      * Register an autoloader.
      *
-     * {@internal When `installed_paths` is set via the ruleset, this autoloader
-     * is needed to run the sniffs.
+     * {@internal This autoloader is not needed for running the sniffs, however, it *is*
+     * needed for running the unit tests as the PHPCS native autoloader runs into trouble there.
+     * This issue will be fixed in PHPCS 3.1, so the below code can be removed once the
+     * minimum PHPCS 3.x requirement for PHPCompatibility has gone up to 3.1.
+     * Upstream issue: {@link https://github.com/squizlabs/PHP_CodeSniffer/issues/1564} }}
+     *
+     * {@internal Update: when `installed_paths` is set via the ruleset, this autoloader
+     * **is** needed to run the sniffs.
      * Upstream issue: {@link https://github.com/squizlabs/PHP_CodeSniffer/issues/1591} }}
      */
     spl_autoload_register(function ($class) {
@@ -63,7 +61,7 @@ if (defined('PHPCOMPATIBILITY_PHPCS_ALIASES_SET') === false) {
         $file = realpath(__DIR__) . DIRECTORY_SEPARATOR . strtr($class, '\\', DIRECTORY_SEPARATOR) . '.php';
 
         if (file_exists($file)) {
-            include_once $file;
+            include_once($file);
         }
     });
 }
