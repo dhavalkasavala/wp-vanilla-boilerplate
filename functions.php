@@ -28,7 +28,7 @@ if ( ! function_exists( 'wp_vanilla_setup' ) ) :
 		// This theme uses wp_nav_menu() in two locations.
 		register_nav_menus(
 			array(
-				'menu-1' => __( 'Primary', 'wp-vanilla' ),
+				'primary' => __( 'Primary', 'wp-vanilla' ),
 				'footer' => __( 'Footer Menu', 'wp-vanilla' ),
 			)
 		);
@@ -79,7 +79,7 @@ if ( ! function_exists( 'wp_vanilla_setup' ) ) :
 		// Add support for responsive embedded content.
 		add_theme_support( 'responsive-embeds' );
 	}
-
+	add_action( 'after_setup_theme', 'wp_vanilla_setup' );
 endif;
 
 /**
@@ -95,7 +95,7 @@ function wp_vanilla_content_width() {
 }
 add_action( 'after_setup_theme', 'wp_vanilla_content_width', 0 );
 
-function twentynineteen_scripts() {
+function wp_vanilla_scripts() {
 	wp_enqueue_style( 'wp-vanilla-style', get_stylesheet_uri(), array(), wp_get_theme()->get( 'Version' ) );
 
 	wp_enqueue_style('wp-vanilla-main-style',get_template_directory_uri().'/css/style.css');
@@ -114,7 +114,7 @@ function twentynineteen_scripts() {
 		wp_enqueue_script( 'comment-reply' );
 	}
 }
-add_action( 'wp_enqueue_scripts', 'twentynineteen_scripts' );
+add_action( 'wp_enqueue_scripts', 'wp_vanilla_scripts' );
 
 
 /**
