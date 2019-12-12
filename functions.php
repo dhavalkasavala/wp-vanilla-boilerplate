@@ -134,3 +134,13 @@ function wp_vanilla_skip_link_focus_fix() {
 	<?php
 }
 add_action( 'wp_print_footer_scripts', 'wp_vanilla_skip_link_focus_fix' );
+
+/**
+ * Functions which enhance the theme by hooking into WordPress.
+ */
+require get_template_directory() . '/inc/template-functions.php';
+
+/**
+ * Customizer additions.
+ */
+require get_template_directory() . '/inc/customizer.php';

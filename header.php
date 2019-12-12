@@ -8,7 +8,7 @@
 </head>
 
 <body <?php body_class(); ?>>
-<div>
+<div class="container">
 	<a class="skip-link screen-reader-text" href="#content"><?php _e( 'Skip to content', '' ); ?></a>
 
 		<nav class="flex items-center justify-between flex-wrap bg-teal p-6">
@@ -22,7 +22,7 @@
 				else :
 					?>
 					<span class="font-semibold text-xl tracking-tight">
-					<h1><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
+					<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
 					</span>
 					<?php
 				endif;
@@ -54,5 +54,3 @@
 			    </div>
 		  	</div>
 		</nav>
-	</div>
-<div>
