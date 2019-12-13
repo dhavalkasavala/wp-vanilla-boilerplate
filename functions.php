@@ -75,6 +75,7 @@ if ( ! function_exists( 'wp_vanilla_setup' ) ) :
 
 		// Add support for editor styles.
 		add_theme_support( 'editor-styles' );
+		add_editor_style( 'css/style-editor.css' );
 
 		// Add support for responsive embedded content.
 		add_theme_support( 'responsive-embeds' );
@@ -102,7 +103,7 @@ function wp_vanilla_scripts() {
 
 	wp_enqueue_style('wp-vanilla-custom-style',get_template_directory_uri().'/css/custom-style.css');
 
-	if ( has_nav_menu( 'menu-1' ) ) {
+	if ( has_nav_menu( 'primary' ) ) {
 		wp_enqueue_script( 'wp-vanilla-touch-navigation', get_theme_file_uri( '/js/touch-keyboard-navigation.js' ), array(), '', true );
 	}
 
