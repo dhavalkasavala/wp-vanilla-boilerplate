@@ -20,13 +20,15 @@ get_header();
 			<h2 class="widget-title"><?php esc_html_e( 'Most Used Categories', 'wp-vanilla' ); ?></h2>
 			<ul>
 				<?php
-				wp_list_categories( array(
-					'orderby'    => 'count',
-					'order'      => 'DESC',
-					'show_count' => 1,
-					'title_li'   => '',
-					'number'     => 10,
-				) );
+				wp_list_categories(
+					array(
+						'orderby'    => 'count',
+						'order'      => 'DESC',
+						'show_count' => 1,
+						'title_li'   => '',
+						'number'     => 10,
+					)
+				);
 				?>
 			</ul>
 		</div><!-- .widget -->
@@ -36,4 +38,4 @@ get_header();
 		$wp_vanilla_archive_content = '<p>' . sprintf( esc_html__( 'Try looking in the monthly archives. %1$s', 'wp-vanilla' ), convert_smilies( ':)' ) ) . '</p>';
 		the_widget( 'WP_Widget_Archives', 'dropdown=1', "after_title=</h2>$wp_vanilla_archive_content" );
 
-get_footer();
+		get_footer();

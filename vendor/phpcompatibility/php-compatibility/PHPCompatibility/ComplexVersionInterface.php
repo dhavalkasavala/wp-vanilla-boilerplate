@@ -1,24 +1,23 @@
 <?php
 /**
- * \PHPCompatibility\ComplexVersionInterface.
+ * PHPCompatibility, an external standard for PHP_CodeSniffer.
  *
- * @category PHP
- * @package  PHPCompatibility
- * @author   Juliette Reinders Folmer <phpcompatibility_nospam@adviesenzo.nl>
+ * @package   PHPCompatibility
+ * @copyright 2012-2019 PHPCompatibility Contributors
+ * @license   https://opensource.org/licenses/LGPL-3.0 LGPL3
+ * @link      https://github.com/PHPCompatibility/PHPCompatibility
  */
 
 namespace PHPCompatibility;
 
+use PHP_CodeSniffer_File as File;
+
 /**
- * \PHPCompatibility\ComplexVersionInterface.
+ * Complex Version Interface.
  *
  * Interface to be implemented by sniffs using a multi-dimensional array of
  * PHP features (functions, classes etc) being sniffed for with version
  * information in sub-arrays.
- *
- * @category PHP
- * @package  PHPCompatibility
- * @author   Juliette Reinders Folmer <phpcompatibility_nospam@adviesenzo.nl>
  */
 interface ComplexVersionInterface
 {
@@ -35,7 +34,7 @@ interface ComplexVersionInterface
      *
      * @return void
      */
-    public function handleFeature(\PHP_CodeSniffer_File $phpcsFile, $stackPtr, array $itemInfo);
+    public function handleFeature(File $phpcsFile, $stackPtr, array $itemInfo);
 
 
     /**
@@ -71,7 +70,5 @@ interface ComplexVersionInterface
      *
      * @return void
      */
-    public function addError(\PHP_CodeSniffer_File $phpcsFile, $stackPtr, array $itemInfo, array $errorInfo);
-
-
-}//end interface
+    public function addError(File $phpcsFile, $stackPtr, array $itemInfo, array $errorInfo);
+}

@@ -3,14 +3,14 @@
 /**
  * WP vanilla boilerplate only works in WordPress 4.7 or later.
  */
-if ( version_compare( $GLOBALS['wp_version'], '4.7', '<' ) ) { 
+if ( version_compare( $GLOBALS['wp_version'], '4.7', '<' ) ) {
 	return;
 }
 
 if ( ! function_exists( 'wp_vanilla_setup' ) ) :
 
 	function wp_vanilla_setup() {
-		
+
 		load_theme_textdomain( 'wp-vanilla', get_template_directory() . '/languages' );
 
 		// Add default posts and comments RSS feed links to head.
@@ -29,7 +29,7 @@ if ( ! function_exists( 'wp_vanilla_setup' ) ) :
 		register_nav_menus(
 			array(
 				'primary' => __( 'Primary', 'wp-vanilla' ),
-				'footer' => __( 'Footer Menu', 'wp-vanilla' ),
+				'footer'  => __( 'Footer Menu', 'wp-vanilla' ),
 			)
 		);
 
@@ -52,7 +52,6 @@ if ( ! function_exists( 'wp_vanilla_setup' ) ) :
 
 		/**
 		 * Add support for core custom logo.
-		 *
 		 */
 		add_theme_support(
 			'custom-logo',
@@ -99,17 +98,17 @@ add_action( 'after_setup_theme', 'wp_vanilla_content_width', 0 );
 function wp_vanilla_scripts() {
 	wp_enqueue_style( 'wp-vanilla-style', get_stylesheet_uri(), array(), wp_get_theme()->get( 'Version' ) );
 
-	wp_enqueue_style('wp-vanilla-main-style',get_template_directory_uri().'/css/style.css');
+	wp_enqueue_style( 'wp-vanilla-main-style', get_template_directory_uri() . '/css/style.css' );
 
-	wp_enqueue_style('wp-vanilla-custom-style',get_template_directory_uri().'/css/custom-style.css');
+	wp_enqueue_style( 'wp-vanilla-custom-style', get_template_directory_uri() . '/css/custom-style.css' );
 
 	if ( has_nav_menu( 'primary' ) ) {
 		wp_enqueue_script( 'wp-vanilla-touch-navigation', get_theme_file_uri( '/js/touch-keyboard-navigation.js' ), array(), '', true );
 	}
 
 	wp_enqueue_script( 'wp-vanilla-skip-links-js', get_theme_file_uri( '/js/skip-link-focus-fix.js' ), array(), '', true );
-	
-	wp_enqueue_script('wp-vanilla-main-js',get_template_directory_uri().'/js/script.js',array(),'',true);	
+
+	wp_enqueue_script( 'wp-vanilla-main-js', get_template_directory_uri() . '/js/script.js', array(), '', true );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );

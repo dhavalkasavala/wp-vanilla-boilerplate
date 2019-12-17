@@ -3,7 +3,7 @@
 get_header();
 
 
-	if ( have_posts() ) : ?>
+if ( have_posts() ) : ?>
 
 		<header class="page-header">
 			<h1 class="text-xl text-gray-900 leading-tight page-title">
@@ -37,4 +37,4 @@ get_header();
 	endif;
 
 
-get_footer();
+	get_footer();
