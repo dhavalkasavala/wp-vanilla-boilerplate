@@ -5,7 +5,7 @@ get_header();
 
 if ( have_posts() ) : ?>
 
-		<header class="page-header">
+		<header class="page-header container mx-auto px-6">
 			<?php
 			the_archive_title( '<h1 class="text-xl text-gray-900 leading-tight page-title">', '</h1>' );
 			the_archive_description( '<div class="archive-description">', '</div>' );

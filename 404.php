@@ -4,7 +4,7 @@ get_header();
 
 ?>
 
-	<header class="page-header">
+	<header class="page-header mx-auto px-6">
 		<h1 class="page-title"><?php esc_html_e( 'Oops! That page can&rsquo;t be found.', 'wp-vanilla' ); ?></h1>
 	</header><!-- .page-header -->
 
@@ -16,7 +16,7 @@ get_header();
 		the_widget( 'WP_Widget_Recent_Posts' );
 		?>
 
-		<div class="widget widget_categories">
+		<div class="widget widget_categories container mx-auto px-6">
 			<h2 class="widget-title"><?php esc_html_e( 'Most Used Categories', 'wp-vanilla' ); ?></h2>
 			<ul>
 				<?php

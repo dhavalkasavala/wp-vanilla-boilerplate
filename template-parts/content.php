@@ -3,7 +3,7 @@
  * @package Wp_vanilla
  **/
 ?>
-<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+<article class="container mx-auto px-6" id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 	<header class="entry-header">
 		<?php
 		if ( is_singular() ) :

@@ -8,7 +8,7 @@
 </head>
 
 <body <?php body_class(); ?>>
-<div class="container">
+<div class="wvb-wrapper">
 	<a class="skip-link screen-reader-text" href="#content"><?php _e( 'Skip to content', 'wp-vanilla' ); ?></a>
 
 		<nav class="flex items-center justify-between flex-wrap bg-teal p-6">
@@ -22,7 +22,8 @@
 				else :
 					?>
 					<span class="font-semibold text-xl tracking-tight">
-					<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
+					<h1 class="site-title text-center"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
+					<p class="wvb-tagline font-light text-base"><?php echo bloginfo('description'); ?></p>
 					</span>
 					<?php
 				endif;
@@ -48,7 +49,7 @@
 
 						$output = strip_tags( wp_nav_menu( $menuParam ), '<a>' );
 						$output = preg_replace( '/<a/', '<a class="block mt-4 lg:inline-block lg:mt-0 text-teal-lighter hover:text-purple-600 mr-4"', $output );
-						echo esc_html( $output );
+						echo html_entity_decode(esc_html( $output ));
 					}
 					?>
 				</div>
